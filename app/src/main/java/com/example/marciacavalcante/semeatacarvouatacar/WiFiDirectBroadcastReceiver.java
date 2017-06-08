@@ -3,8 +3,14 @@ package com.example.marciacavalcante.semeatacarvouatacar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marcia Cavalcante on 26/05/2017.
@@ -15,6 +21,10 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
     private MainActivity mActivity;
+    private WifiP2pManager.PeerListListener myPeerListListener;
+    private List<WifiP2pDevice> mPeer;
+    private List<WifiP2pConfig> mConfig;
+
 
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
@@ -39,6 +49,28 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Call WifiP2pManager.requestPeers() to get a list of current peers
+            mPeer = new ArrayList<WifiP2pDevice>();
+            mConfig = new ArrayList<WifiP2pConfig>();
+
+            if (mManager != null) {
+
+
+
+                myPeerListListener = new WifiP2pManager.PeerListListener() {
+                    @Override
+                    public void onPeersAvailable(WifiP2pDeviceList peers) {
+                        mPeer.clear();
+                        mPeer.addAll(peers.getDeviceList());
+
+                        mActivity.achouPeers(peers);
+
+
+                    }
+                };
+
+                mManager.requestPeers(mChannel, myPeerListListener);
+
+            }
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
             // Respond to new connection or disconnections
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {

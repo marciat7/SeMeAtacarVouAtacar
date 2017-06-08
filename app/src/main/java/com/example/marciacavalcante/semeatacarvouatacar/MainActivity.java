@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -27,6 +29,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     SurfaceView cameraPreview;
@@ -156,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess() {
                 Log.i("wifi", "onSuccess: achou peer ");
 
+
             }
 
             @Override
@@ -172,4 +177,11 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(mReceiver);
     }
 
+    public void achouPeers(WifiP2pDeviceList peers){
+        List<WifiP2pDevice> lista = new ArrayList<WifiP2pDevice>();
+        lista.addAll(peers.getDeviceList());
+        for (int i = 0; i < lista.size(); i++) {
+            Log.i("wifidirect", "achouPeers: " + lista.get(i).deviceName);
+        }
+    }
 }
