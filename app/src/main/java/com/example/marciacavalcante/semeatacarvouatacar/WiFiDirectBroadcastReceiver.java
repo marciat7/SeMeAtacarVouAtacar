@@ -20,7 +20,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
-    private MainActivity mActivity;
+    private ChooseOpponet mActivity;
     private WifiP2pManager.PeerListListener myPeerListListener;
     private List<WifiP2pDevice> mPeer;
     private List<WifiP2pConfig> mConfig;
@@ -28,7 +28,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
-                                       MainActivity activity) {
+                                       ChooseOpponet activity) {
         super();
         this.mManager = manager;
         this.mChannel = channel;

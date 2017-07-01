@@ -43,7 +43,7 @@ public class MemeAdpeter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+/*
         Uri imageUri = Uri.parse("https://68.media.tumblr.com/tumblr_m2ns32J1Mz1qexf5wo1_500.gif");
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -52,6 +52,7 @@ public class MemeAdpeter extends BaseAdapter {
                 .build();
         SimpleDraweeView draweeView = (SimpleDraweeView) a.findViewById(R.id.my_image_view);
         draweeView.setController(controller);
-        return draweeView;
+        */
+        return convertView;
     }
 }

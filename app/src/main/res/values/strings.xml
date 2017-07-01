@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Se Me Atacar Vou Atacar</string>
-    <string name="result_txt">Resultado aqui</string>
+    <string name="getMemeBtnTxt">Capiturar Meme</string>
+    <string name="displayMemeBtnTxt">Ver seus Memes</string>
+    <string name="fightBtnTxt">Atacar!</string>
 </resources>
