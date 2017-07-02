@@ -29,6 +29,7 @@ public class GetMeme extends AppCompatActivity {
     TextView txtResult;
     CameraSource cameraSource;
     static final int RequestCameraPermissionID = 1001;
+    boolean passou = false;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -104,14 +105,16 @@ public class GetMeme extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
 
                 final SparseArray<Barcode> qrcodes = detections.getDetectedItems();
-                if (qrcodes.size() > 0){
+
+                if (qrcodes.size() > 0 && qrcodes.valueAt(0).rawValue.contains("cin.ufpe.br/~mctc/memes/") && !passou) {
+                    passou = true;
                     Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(1000);
-
+                    String url = qrcodes.valueAt(0).rawValue;
                     Intent intent = new Intent(getApplicationContext(), DisplayMeme.class);
+                    intent.putExtra("URL", url);
                     startActivity(intent);
                 }
-
             }
         });
     }

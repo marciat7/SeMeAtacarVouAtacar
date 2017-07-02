@@ -12,6 +12,8 @@ public class OpponentViewHolder extends RecyclerView.ViewHolder {
     final TextView nome;
     public OpponentViewHolder(View itemView) {
         super(itemView);
-        nome = (TextView) itemView.findViewById(R.id.nomeOpponent);
+        nome = (TextView) itemView.findViewById(R.id.item_titulo);
     }
+
+
 }

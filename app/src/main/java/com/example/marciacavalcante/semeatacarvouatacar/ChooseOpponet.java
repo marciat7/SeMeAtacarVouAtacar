@@ -3,6 +3,7 @@ package com.example.marciacavalcante.semeatacarvouatacar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,7 +26,8 @@ public class ChooseOpponet extends AppCompatActivity {
     WifiP2pManager.Channel mChannel;
     BroadcastReceiver mReceiver;
     IntentFilter mIntentFilter;
-    List<String> oponentes;
+    List<Opponent> oponentes;
+    OpponentAdapter opponentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +44,13 @@ public class ChooseOpponet extends AppCompatActivity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
-        oponentes = new ArrayList<String>();
+        oponentes = new ArrayList<Opponent>();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new OpponentAdapter(oponentes, this));
+        opponentAdapter = new OpponentAdapter(oponentes, this);
+        recyclerView.setAdapter(opponentAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(layout);
+
 
     }
 
@@ -78,7 +83,8 @@ public class ChooseOpponet extends AppCompatActivity {
         lista.addAll(peers.getDeviceList());
         for (int i = 0; i < lista.size(); i++) {
             Log.i("wifidirect", "achouPeers: " + lista.get(i).deviceName);
-            oponentes.add(lista.get(i).deviceName + "i");
+            opponentAdapter.updateList(new Opponent(lista.get(i), mChannel, mManager));
+
         }
 
     }
