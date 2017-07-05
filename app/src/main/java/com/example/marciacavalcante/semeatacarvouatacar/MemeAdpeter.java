@@ -26,9 +26,9 @@ import java.util.List;
 public class MemeAdpeter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
-    private ArrayList<Meme> data = new ArrayList<Meme>();
+    private List<Meme> data = new ArrayList<Meme>();
 
-    public MemeAdpeter(Context context, int layoutResourceId, ArrayList<Meme> data) {
+    public MemeAdpeter(Context context, int layoutResourceId, List<Meme> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -52,13 +52,20 @@ public class MemeAdpeter extends ArrayAdapter {
         }
 
         Meme item = data.get(position);
-        holder.imageTitle.setText(item.getForce());
-        //holder.image.setImageURI(item.getUrl());
-        Picasso.with(context)
-                .load(item.getUrl())
-                .centerCrop()
-                .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
-                .into(holder.image);
+        holder.imageTitle.setText("Força: " + item.getForce());
+        if (!item.getUrl().contains("http://")){
+            Picasso.with(context)
+                    .load("http://" + item.getUrl())
+                    .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
+                    .fit()
+                    .into(holder.image);
+        }else {
+            Picasso.with(context)
+                    .load(item.getUrl())
+                    .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
+                    .fit()
+                    .into(holder.image);
+        }
         return row;
     }
 

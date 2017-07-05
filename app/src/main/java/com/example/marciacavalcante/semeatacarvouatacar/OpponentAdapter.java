@@ -50,6 +50,13 @@ public class OpponentAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onSuccess() {
                         Log.i("WIFICONEc", "onSuccess: conectado");
+                        Log.i("WIFICONEc", oponentes.get(position).getOp().deviceName);
+                        Intent intent = new Intent(context, ChooseMeme.class);
+                        intent.putExtra("HOST", oponentes.get(position).getOp().deviceName);
+                        context.startActivity(intent);
+
+
+
                     }
 
                     @Override

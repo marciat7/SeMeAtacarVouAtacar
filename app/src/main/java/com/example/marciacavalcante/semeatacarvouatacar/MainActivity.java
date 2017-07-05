@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
+        Intent serviceItentizinha = new Intent(this, ConnectionServer.class);
+        startService(serviceItentizinha);
+
 
         Button getMeme = (Button) findViewById(R.id.getMemebtn);
         getMeme.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Button displayMemes = (Button) findViewById(R.id.displayMemeBtn);
         displayMemes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DisplayMeme.class);
+                Intent intent = new Intent(getApplicationContext(), DisplayAllMemes.class);
                 startActivity(intent);
             }
         });
