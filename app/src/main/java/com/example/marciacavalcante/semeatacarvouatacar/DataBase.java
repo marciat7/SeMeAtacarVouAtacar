@@ -75,4 +75,11 @@ public class DataBase extends SQLiteOpenHelper {
         return temp;
     }
 
+    public void removerMeme(Meme meme){
+        String selection = KEY_URL + " LIKE ?";
+        String[] selectionArgs = { meme.getUrl() };
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TB_MEME, selection, selectionArgs);
+    }
+
 }

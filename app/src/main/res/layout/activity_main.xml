@@ -9,7 +9,7 @@
         android:text="@string/getMemeBtnTxt"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
-        android:drawableLeft="@drawable/common_full_open_on_phone"
+        android:drawableLeft="@drawable/ic_get_meme"
         android:background="#FF1493"
         />
 
@@ -21,7 +21,7 @@
         android:layout_below="@+id/getMemebtn"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
-        android:drawableLeft="@drawable/ic_group_collapse_00"
+        android:drawableLeft="@drawable/ic_see_meme"
         android:background="#0000FF"
         />
     <Button

@@ -4,8 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,60 +24,49 @@ public class Fight extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
+        String url;
+
+        if (savedInstanceState != null){
+            url = (String) savedInstanceState.get("URL");
+            Meme meme = new Meme(url, 0);
+            simularBatalha(meme);
+
+        }else{
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+
+            } else {
+                url = extras.getString("URL");
+                Meme meme = new Meme(url, 0);
+                simularBatalha(meme);
+            }
+        }
     }
-//    public static class FileServerAsyncTask extends AsyncTask {
-//
-//        private Context context;
-//        private TextView statusText;
-//
-//        public FileServerAsyncTask(Context context, View statusText) {
-//            this.context = context;
-//            this.statusText = (TextView) statusText;
-//        }
-//        /**
-//         * Start activity that can handle the JPEG image
-//         */
-//
-//        @Override
-//        protected void onPostExecute(Object o) {
-//           /* if (result != null) {
-//                statusText.setText("File copied - " + result);
-//                Intent intent = new Intent();
-//                intent.setAction(android.content.Intent.ACTION_VIEW);
-//                intent.setDataAndType(Uri.parse("file://" + result), "image/*");
-//                context.startActivity(intent);
-//            }*/
-//        }
-//
-//        @Override
-//        protected String doInBackground(Object[] params) {
-//            try {
-//
-//                /**
-//                 * Create a server socket and wait for client connections. This
-//                 * call blocks until a connection is accepted from a client
-//                 */
-//                ServerSocket serverSocket = new ServerSocket(8888);
-//                Socket client = serverSocket.accept();
-//
-//                InputStream inputstream = client.getInputStream();
-//                inputstream.
-//
-//                String toSend = "String to send";
-//
-//                /**
-//                 * If this code is reached, a client has connected and transferred data
-//                 * Save the input stream from the client as a JPEG file
-//                 */
-//
-//                serverSocket.close();
-//                return f.getAbsolutePath();
-//            } catch (IOException e) {
-//                return null;
-//            }
-//           // return null;
-//        }
-//    }
+
+    private void simularBatalha(Meme meme){
+        ImageView view = (ImageView) findViewById(R.id.fightMemeView);
+        DataBase db = new DataBase(this);
+        if (Math.random() >= 0.5){
+            Meme novo = new Meme("http://www.cin.ufpe.br/~mctc/memes/8.png", 6);
+            db.insertMeme(novo);
+            Picasso.with(this)
+                    .load(novo.getUrl())
+                    .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
+                    .fit()
+                    .into(view);
+            Toast toast = Toast.makeText(this, "Aee Caralh*", Toast.LENGTH_SHORT);
+            toast.show();
+        }else {
+            db.removerMeme(meme);
+            Picasso.with(this)
+                    .load("http://www.cin.ufpe.br/~mctc/memes/31.png")
+                    .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
+                    .fit()
+                    .into(view);
+            Toast toast = Toast.makeText(this, "Not Today Satan", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }
 
 

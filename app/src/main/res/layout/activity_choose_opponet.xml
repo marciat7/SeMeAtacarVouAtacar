@@ -10,12 +10,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/nomeOpponent"
-        android:text="@string/fightBtnTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="18sp" />
-
 </android.support.design.widget.CoordinatorLayout>

@@ -34,9 +34,18 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
+        <service
+            android:name=".ConnectionServer"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+
         <activity android:name=".DisplayMeme" />
         <activity android:name=".GetMeme" />
-        <activity android:name=".ChooseOpponet"></activity>
+        <activity android:name=".ChooseOpponet" />
+        <activity android:name=".DisplayAllMemes" />
+        <activity android:name=".Fight" />
+        <activity android:name=".ChooseMeme"></activity>
     </application>
 
 </manifest>

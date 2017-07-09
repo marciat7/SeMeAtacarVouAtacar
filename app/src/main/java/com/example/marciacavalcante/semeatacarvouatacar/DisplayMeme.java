@@ -1,56 +1,53 @@
 package com.example.marciacavalcante.semeatacarvouatacar;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.GridView;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 public class DisplayMeme extends AppCompatActivity {
-    GridView gd;
-    MemeAdpeter memeAdpeter;
     DataBase dataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_display_meme);
         String url = "";
         dataBase = new DataBase(this);
 
+        Meme meme = null;
+
 
         if (savedInstanceState != null){
             url = (String) savedInstanceState.get("URL");
+            meme = new Meme(url.substring(0, url.indexOf(",")), Integer.parseInt(url.substring(url.indexOf(",")+1)));
+            dataBase.insertMeme(meme);
         }else{
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
 
             } else {
-                Log.i("MemeUrlOutra: ", url);
                 url = extras.getString("URL");
-                Meme meme = new Meme(url.substring(0, url.indexOf(",")), Integer.parseInt(url.substring(url.indexOf(",")+1)));
+                meme = new Meme(url.substring(0, url.indexOf(",")), Integer.parseInt(url.substring(url.indexOf(",")+1)));
                 dataBase.insertMeme(meme);
-
-
             }
         }
 
+        if (!url.contains("http://")){
+            url = "http://" + url;
+        }
+        ImageView memeView = (ImageView) findViewById(R.id.memeView);
+        Picasso.with(this)
+                .load(url.substring(0, url.indexOf(",")))
+                .placeholder(R.drawable.cast_ic_mini_controller_skip_next)
+                .fit()
+                .into(memeView);
 
-        Uri imageUri = Uri.parse(url);
-
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(imageUri)
-                .setAutoPlayAnimations(true)
-                .build();
-        SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.my_image_view);
-        draweeView.setController(controller);
-
-
+        TextView forceView = (TextView) findViewById(R.id.forceView);
+        if (meme != null){
+            forceView.setText("Força: " + meme.getForce());
+        }
 
     }
 }

@@ -32,9 +32,9 @@ public class ChooseMeme extends AppCompatActivity {
         setContentView(R.layout.activity_choose_meme);
 
         dataBase = new DataBase(this);
-        List<Meme> memes = dataBase.getMemes();
+        final List<Meme> memes = dataBase.getMemes();
 
-        gridView = (GridView) findViewById(R.id.memeGridView);
+        gridView = (GridView) findViewById(R.id.chooseMemeGridView);
         memeAdpeter = new MemeAdpeter(this, R.layout.grid_item_layout, memes);
         gridView.setAdapter(memeAdpeter);
 
@@ -43,7 +43,9 @@ public class ChooseMeme extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), Fight.class);
+                intent.putExtra("URL", memes.get(position).getUrl());
                 startActivity(intent);
+                finish();
 
             }
         });

@@ -114,6 +114,7 @@ public class GetMeme extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), DisplayMeme.class);
                     intent.putExtra("URL", url);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
